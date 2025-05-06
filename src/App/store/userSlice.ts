@@ -23,18 +23,28 @@ let initialState: InitialStateType = {
   }],
   mockTasks: [
     {
-      id: 't1',
+      id: '1',
       title: 'Протереть туалетный столик в ванной',
       room: 'Кухня',
       date: new Date(2025, 4, 6),
-      description: '123'
+      description: '123',
+      done: false
     },
     {
-      id: 't2',
+      id: '2',
       title: 'Протереть стол',
       room: 'Гостиная',
       date: new Date(2025, 4, 7),
-      description: '123'
+      description: '123',
+      done: true
+    },
+    {
+      id: '3',
+      title: 'Пропылесосить',
+      room: 'Гостиная',
+      date: new Date(2025, 4, 7),
+      description: '12356789',
+      done: false
     },
   ]
 }

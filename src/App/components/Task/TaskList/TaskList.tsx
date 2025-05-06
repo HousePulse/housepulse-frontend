@@ -7,7 +7,8 @@ import sleepImage from '@assets/img/sleep.png';
 import {BiSortAlt2} from "react-icons/bi";
 
 type Props = {
-  tasks: Task[]
+  tasks: Task[],
+  isShownHeaderInfo: boolean
 };
 
 const TaskListSortButton: React.FC<{ onClick: () => void }> = ({onClick}) => {
@@ -19,7 +20,7 @@ const TaskListSortButton: React.FC<{ onClick: () => void }> = ({onClick}) => {
   )
 }
 
-const TaskList: React.FC<Props> = ({tasks}) => {
+const TaskList: React.FC<Props> = ({tasks, isShownHeaderInfo}) => {
   const global = useAppSelector(state => state.global);
   const dispatch = useAppDispatch();
 
@@ -36,11 +37,11 @@ const TaskList: React.FC<Props> = ({tasks}) => {
 
   return (
       <div className={styles.taskListContainer}>
-        <div className={styles.header}>
+        {isShownHeaderInfo && <div className={styles.header}>
           <p>{tasks.length} Tasks</p>
           <TaskListSortButton onClick={() => {
           }}/>
-        </div>
+        </div>}
         <ul className={styles.list}>
           {tasks.map(t => (
               <li key={t.id} className={styles.item} onClick={() => setOpenTask(t)}>

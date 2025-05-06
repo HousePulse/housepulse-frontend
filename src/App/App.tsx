@@ -1,9 +1,10 @@
-import React, {FC} from "react";
+import React, {FC, Reducer} from "react";
 import {createHashRouter, Navigate, Outlet, RouterProvider} from "react-router-dom";
 import TasksPage from "@components/Task/TasksPage/TasksPage";
 import * as style from "./App.module.css";
 import Sidebar from "@components/Sidebar/Sidebar";
 import Schedule from "@components/Schedule/Schedule";
+import Header from "@components/Header/Header";
 
 export const pageRoutersName = {
   schedule: 'schedule',
@@ -15,7 +16,7 @@ export const pageRoutersName = {
 export interface PageRouter {
   path: string;
   element: React.ReactNode,
-  title: string
+  title: string,
 }
 
 export const pageRoutes: PageRouter[] = [
@@ -27,7 +28,7 @@ export const pageRoutes: PageRouter[] = [
   {
     title: 'Все задачи',
     path: `/${pageRoutersName.all_tasks}`,
-    element: <TasksPage/>
+    element: <TasksPage/>,
   },
   {
     title: 'История',
@@ -45,6 +46,7 @@ const Layout: FC = () => (
     <div className={style.wrapper}>
       <Sidebar/>
       <main className={style.main}>
+        <Header/>
         <Outlet/>
       </main>
     </div>

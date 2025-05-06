@@ -5,15 +5,18 @@ import SidebarNavButton from "@components/UI/SidebarNavButton/SidebarNavButton";
 import RoomList from "@components/Sidebar/RoomList/RoomList";
 import SettingsModal from "@components/Settings/SettingsModal/SettingsModal";
 import {IoIosArrowDown, IoIosSettings} from "react-icons/io";
-import {PageRouter, pageRoutes} from "@root/App/App";
+import {PageRouter, pageRoutersName, pageRoutes} from "@root/App/App";
+import {tasksSelector} from "@store/selectors/selectors";
 
 type Props = {};
 
 const Sidebar: React.FC<Props> = () => {
   const global = useAppSelector(state => state.global);
+  const tasks = useAppSelector(tasksSelector);
   const dispatch = useAppDispatch();
 
   const [settingsOpen, setSettingsOpen] = useState(false);
+
   const sidebarActive = global.sidebarActive;
   const chooseHomeHandler = () => {
 
@@ -36,10 +39,22 @@ const Sidebar: React.FC<Props> = () => {
         <nav className={styles.nav}>
           {
             pageRoutes.map((pageRoute: PageRouter, index: number) => {
+              let count = null;
+
+              switch (pageRoute.path.slice(1)) {
+                case pageRoutersName.all_tasks:
+                  count = tasks.filter(task => !task.done).length;
+                  break;
+                case pageRoutersName.history:
+                  count = tasks.filter(task => task.done).length;
+                  break;
+              }
+
               return (
                   <SidebarNavButton
                       key={index}
                       label={pageRoute.title}
+                      count={count}
                       routerPath={pageRoute.path}
                   />
               )

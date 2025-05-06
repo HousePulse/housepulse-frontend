@@ -6,7 +6,7 @@ import {NavLink} from "react-router-dom";
 
 type Props = {
   label: string;
-  count?: number;
+  count?: number | null;
   routerPath: string
 };
 

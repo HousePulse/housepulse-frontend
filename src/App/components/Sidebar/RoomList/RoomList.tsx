@@ -23,8 +23,7 @@ const RoomList: FC = (props) => {
         <header className={styles.header}>
           <h2 className={styles.title}>Комнаты</h2>
           <button className={styles.add}>
-            <FiPlus/>
-            Добавить
+            ＋ Добавить
           </button>
         </header>
         {rooms.map((room, index) => {

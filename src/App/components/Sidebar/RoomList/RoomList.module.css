@@ -15,16 +15,19 @@
 }
 
 .add {
-  background: none;
-  border: none;
-  color: var(--color-accent);
-  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  font-size: 0.875rem;
+
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  cursor: pointer;
+
+  background: none;
+  border: none;
 }
 
 .add:hover {
-  text-decoration: underline;
+  color: var(--color-text);
 }

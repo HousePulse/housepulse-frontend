@@ -16,6 +16,7 @@ export interface Task {
   room: string;
   date: Date;
   description: string,
-  repeat?: ITaskRepeat
+  repeat?: ITaskRepeat,
+  done: boolean
 }
 

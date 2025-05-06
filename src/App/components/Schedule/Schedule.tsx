@@ -34,7 +34,6 @@ const Schedule: FC = (props) => {
   return (
       <div className={styles.container}>
         <header className={styles.header}>
-          <Header/>
           <div className={styles.headerText}>
             <h2 className={styles.title}>График</h2>
 
@@ -47,7 +46,10 @@ const Schedule: FC = (props) => {
 
         <WeekRow week={week}/>
 
-        <TaskList tasks={dayTasks}/>
+        <div className={styles.tasksList}>
+          <TaskList tasks={dayTasks}
+                    isShownHeaderInfo={true}/>
+        </div>
 
         <CalendarModal
             tasks={tasks}
