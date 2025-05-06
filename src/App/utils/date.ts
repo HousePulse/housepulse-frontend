@@ -58,7 +58,7 @@ export function fmtDate(
 
 /** Строка «Сегодня, 05 мая», «Завтра, 06 мая» или «05 мая 2025» */
 export function fmtRelativeRu(target: Date, base = new Date()): string {
-  const diff = Math.round((target.getTime() - base.setHours(0, 0, 0, 0)) / 86_400_000);
+  const diff = Math.floor(((target.getTime() - base.setHours(0, 0, 0, 0)) / 86_400_000));
   if (diff === 0) return `Сегодня, ${fmtDate(target)}`;
   if (diff === 1) return `Завтра, ${fmtDate(target)}`;
   return fmtDate(target, {day: '2-digit', month: 'short', year: 'numeric'});
