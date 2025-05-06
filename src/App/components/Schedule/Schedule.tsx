@@ -2,7 +2,7 @@ import React, {FC, useState} from 'react';
 import * as styles from './Schedule.module.css'
 import {useAppDispatch, useAppSelector} from "@store/store";
 
-import {addDays, fmtRelativeRu, isSameDay, rangeDays, startOfWeek,} from '@utils/date';
+import {addDays, diffInDays, fmtRelativeRu, isSameDay, rangeDays, startOfWeek,} from '@utils/date';
 import CalendarModal from "@components/Schedule/CalendarModal/CalendarModal";
 import TaskList from "@components/Task/TaskList/TaskList";
 import {IoIosArrowDown,} from "react-icons/io";
@@ -29,7 +29,7 @@ const Schedule: FC = (props) => {
   const weekStart = startOfWeek(selectedDate);
   const week = rangeDays(weekStart, addDays(weekStart, 6));
 
-  const dayTasks = tasks.filter(t => isSameDay(t.date, selectedDate));
+  const dayTasks = tasks.filter(t => isSameDay(t.date, selectedDate) || diffInDays(t.date, today) >= 1 && isSameDay(today, selectedDate));
 
   return (
       <div className={styles.container}>

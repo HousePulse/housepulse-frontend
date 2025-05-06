@@ -5,6 +5,8 @@ import {Task} from "@types_app/task";
 import TaskModal from '@components/Task/TaskModal/TaskModal';
 import sleepImage from '@assets/img/sleep.png';
 import {BiSortAlt2} from "react-icons/bi";
+import {diffInDays} from "@utils/date";
+import {RxCountdownTimer} from "react-icons/rx";
 
 type Props = {
   tasks: Task[],
@@ -38,18 +40,27 @@ const TaskList: React.FC<Props> = ({tasks, isShownHeaderInfo}) => {
   return (
       <div className={styles.taskListContainer}>
         {isShownHeaderInfo && <div className={styles.header}>
-          <p>{tasks.length} Tasks</p>
-          <TaskListSortButton onClick={() => {
-          }}/>
+            <p>{tasks.length} Tasks</p>
+            <TaskListSortButton onClick={() => {
+            }}/>
         </div>}
         <ul className={styles.list}>
-          {tasks.map(t => (
-              <li key={t.id} className={styles.item} onClick={() => setOpenTask(t)}>
-                <h4>{t.title}</h4>
-                <p>{t.description}</p>
-                <span className={styles.room}>{t.room}</span>
-              </li>
-          ))}
+          {tasks.map(t => {
+            const diffDays = diffInDays(t.date, new Date());
+            const isExpired = diffDays >= 1;
+
+            return (
+                <li key={t.id} className={styles.item} onClick={() => setOpenTask(t)}>
+                  <h4>{t.title}</h4>
+                  <p>{t.description}</p>
+                  {isExpired && <div className={styles.expired}>
+                      <RxCountdownTimer/>
+                      <p>Просрочена {diffDays} д</p>
+                  </div>}
+                  <span className={styles.room}>{t.room}</span>
+                </li>
+            )
+          })}
         </ul>
         <TaskModal task={openTask}
                    onClose={() => setOpenTask(null)}

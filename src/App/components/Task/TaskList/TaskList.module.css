@@ -67,6 +67,19 @@
     font-size: 0.9rem;
     font-weight: 400;
   }
+
+  .expired {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    color: var(--color-error);
+
+    p, svg {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+  }
 }
 
 .room {

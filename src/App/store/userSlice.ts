@@ -26,7 +26,7 @@ let initialState: InitialStateType = {
       id: '1',
       title: 'Протереть туалетный столик в ванной',
       room: 'Кухня',
-      date: new Date(2025, 4, 6),
+      date: new Date(2025, 4, 5),
       description: '123',
       done: false
     },
