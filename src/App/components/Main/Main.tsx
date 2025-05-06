@@ -3,7 +3,7 @@ import * as style from './Main.module.css'
 import {useAppDispatch, useAppSelector} from "@store/store";
 import Sidebar from "@components/Sidebar/Sidebar";
 import Schedule from "@components/Schedule/Schedule";
-import Fab from "@components/Fab/Fab";
+import Fab from "@components/UI/Fab/Fab";
 
 const Main: FC = (props) => {
   const global = useAppSelector(state => state.global);
@@ -16,7 +16,7 @@ const Main: FC = (props) => {
         <Sidebar activeView={activeView} onChangeView={setActiveView}/>
         <main className={style.main}>
           {activeView === 'schedule' && <Schedule/>}
-          {/* добавьте остальные вкладки при необходимости */}
+
           <Fab onClick={() => {/* TODO: open new‑task modal */
           }}/>
         </main>

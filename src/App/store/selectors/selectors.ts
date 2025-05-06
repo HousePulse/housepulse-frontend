@@ -1,6 +1,6 @@
-// import {createAppSelector, RootState} from "@store/store";
-//
-// export const filterData = (state: RootState) => state.global.filterData;
+import {createAppSelector, RootState} from "@store/store";
+export const roomsSelector = (state: RootState) => state.user.rooms;
+export const tasksSelector = (state: RootState) => state.user.mockTasks;
 //
 // const promoListSelector = (state: RootState) => state.promo.promos;
 //

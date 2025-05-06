@@ -1,0 +1,30 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+}
+
+.window {
+  max-height: 92vh;
+  overflow-y: auto;
+  background: #1f1f1f;
+  border-radius: 1rem;
+  padding: 0 0 1.5rem;
+  color: var(--color-text);
+
+  &.small {
+    width: min(25rem, 92vw);
+  }
+
+  &.medium {
+    width: min(42.5rem, 92vw);
+  }
+
+  &.big {
+    width: min(60rem, 92vw);
+  }
+}

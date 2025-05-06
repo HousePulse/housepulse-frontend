@@ -10,7 +10,6 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  /*margin-bottom: var(--spacing);*/
 }
 
 .button:hover {
@@ -36,3 +35,23 @@
   }
 }
 
+.item {
+  display: flex;
+  align-items: center;
+  background: var(--color-panel);
+  padding: calc(var(--spacing) * 1.2) var(--spacing);
+  border-radius: var(--radius);
+  margin-bottom: var(--spacing);
+  gap: var(--spacing);
+  font-size: 1rem;
+}
+
+.icon {
+  font-size: 1.125rem;
+}
+
+.muted {
+  margin-left: auto;
+  font-size: 1rem;
+  color: var(--color-muted);
+}

@@ -1,12 +1,12 @@
 import {configureStore, createSelector} from '@reduxjs/toolkit';
 import globalSlice from "./globalSlice";
-import tasksSlice from "./tasksSlice";
+import userSlice from "./userSlice";
 import {useDispatch, useSelector} from "react-redux";
 
 const store = configureStore({
   reducer: {
     global: globalSlice,
-    tasks: tasksSlice
+    user: userSlice
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck: false

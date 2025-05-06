@@ -1,11 +1,26 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {Task} from "@types_app/task";
+import {IconBackgroundColor, Room, RoomIcon} from "@types_app/room";
 
 type InitialStateType = {
+  rooms: Room[],
   mockTasks: Task[]
 }
 
 let initialState: InitialStateType = {
+  rooms: [{
+    title: 'Кухня',
+    backgroundColor: IconBackgroundColor.Cyan,
+    icon: RoomIcon.Shower,
+  }, {
+    title: 'Весь дом',
+    backgroundColor: IconBackgroundColor.Green,
+    icon: RoomIcon.Home,
+  }, {
+    title: 'Гостиная',
+    backgroundColor: IconBackgroundColor.Red,
+    icon: RoomIcon.Tv,
+  }],
   mockTasks: [
     {
       id: 't1',
@@ -27,11 +42,8 @@ let initialState: InitialStateType = {
 const tasksSlice = createSlice({
   name: 'task',
   initialState,
-  reducers: {
-  }
+  reducers: {}
 });
 
-export const {
-
-} = tasksSlice.actions;
+export const {} = tasksSlice.actions;
 export default tasksSlice.reducer

@@ -3,6 +3,7 @@ import * as styles from './TaskModal.module.css'
 import {useAppDispatch, useAppSelector} from "@store/store";
 import {Task} from "@types_app/task";
 import {FiChevronLeft, FiMoreVertical} from "react-icons/fi";
+import Modal from "@components/UI/Modal/Modal";
 
 const Row: React.FC<{ label: string; value?: string; rightIcon?: React.ReactNode; children?: React.ReactNode }> =
     ({label, value, rightIcon, children}) => (
@@ -21,42 +22,40 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
   const dispatch = useAppDispatch();
 
   return (
-      <div className={styles.backdrop} onClick={onClose}>
-        <div className={styles.window} onClick={e => e.stopPropagation()}>
-          {/* HEADER */}
-          <header className={styles.head}>
-            <button className={styles.back} onClick={onClose}><FiChevronLeft/> Назад</button>
-            <span className={styles.title}>Детали задачи</span>
-            <FiMoreVertical className={styles.menu}/>
-          </header>
+      <Modal onClickBackdrop={onClose}>
+        {/* HEADER */}
+        <header className={styles.head}>
+          <button className={styles.back} onClick={onClose}><FiChevronLeft/> Назад</button>
+          <span className={styles.title}>Детали задачи</span>
+          <FiMoreVertical className={styles.menu}/>
+        </header>
 
-          {/* TITLE + DESCRIPTION */}
-          <input className={styles.inputTitle} defaultValue={task.title}/>
-          <textarea className={styles.inputDesc} rows={2} defaultValue={task.description || ''}/>
+        {/* TITLE + DESCRIPTION */}
+        <input className={styles.inputTitle} defaultValue={task.title}/>
+        <textarea className={styles.inputDesc} rows={2} defaultValue={task.description || ''}/>
 
-          {/* PARAMS */}
-          <div className={styles.params}>
-            <Row label="Комната" value={task.room}/>
-            <Row label="Повтор" value="Каждые 2 недели" rightIcon="▼"/>
-            <Row label="Срок">
-              <button className={styles.dueBtn}>пн, 5 мая</button>
-              <span className={styles.overdue}>Просрочена 1 д</span>
-            </Row>
-            <Row label="Напоминание">
-              <input type="checkbox"/>
-            </Row>
-          </div>
-
-          {/* LOCKED */}
-          <button className={styles.locked}>Назначить задачу 🔒</button>
-
-          {/* FOOTER */}
-          <footer className={styles.footer}>
-            <button className={styles.ok}>✓ Выполнить</button>
-            <button className={styles.skip}>→ Пропустить</button>
-          </footer>
+        {/* PARAMS */}
+        <div className={styles.params}>
+          <Row label="Комната" value={task.room}/>
+          <Row label="Повтор" value="Каждые 2 недели" rightIcon="▼"/>
+          <Row label="Срок">
+            <button className={styles.dueBtn}>пн, 5 мая</button>
+            <span className={styles.overdue}>Просрочена 1 д</span>
+          </Row>
+          <Row label="Напоминание">
+            <input type="checkbox"/>
+          </Row>
         </div>
-      </div>
+
+        {/* LOCKED */}
+        <button className={styles.locked}>Назначить задачу 🔒</button>
+
+        {/* FOOTER */}
+        <footer className={styles.footer}>
+          <button className={styles.ok}>✓ Выполнить</button>
+          <button className={styles.skip}>→ Пропустить</button>
+        </footer>
+      </Modal>
   );
 }
 

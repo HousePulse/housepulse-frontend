@@ -1,5 +1,5 @@
 import React from 'react';
-import * as styles from './NavButton.module.css'
+import * as styles from './SidebarNavButton.module.css'
 import {useAppDispatch, useAppSelector} from "@store/store";
 import {MdKeyboardArrowRight} from "react-icons/md";
 
@@ -10,7 +10,7 @@ type Props = {
   onClick: () => void;
 };
 
-const NavButton: React.FC<Props> = ({label, count, active, onClick}) => {
+const SidebarNavButton: React.FC<Props> = ({label, count, active, onClick}) => {
   const global = useAppSelector(state => state.global);
   const dispatch = useAppDispatch();
 
@@ -25,4 +25,4 @@ const NavButton: React.FC<Props> = ({label, count, active, onClick}) => {
   );
 }
 
-export default NavButton;
+export default SidebarNavButton;

@@ -8,24 +8,29 @@ import CalendarModal from "@components/Schedule/CalendarModal/CalendarModal";
 import TaskList from "@components/Schedule/Task/TaskList/TaskList";
 import {IoIosArrowDown,} from "react-icons/io";
 import Header from "@components/Header/Header";
+import {tasksSelector} from "@store/selectors/selectors";
+import {Task} from "@types_app/task";
+import WeekRow from "@components/Schedule/WeekRow/WeekRow";
+import {setSelectedDate} from "@store/globalSlice";
 
 const today = new Date();
 
 const weekdays = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
 
 const Schedule: FC = (props) => {
-  const tasks = useAppSelector(state => state.tasks);
+  const global = useAppSelector(state => state.global);
+  const tasks: Task[] = useAppSelector(tasksSelector);
   const dispatch = useAppDispatch();
 
   const today = new Date();
-  const [selectedDate, setSelectedDate] = useState<Date>(today);
+  const selectedDate = global.selectedDate;
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [activeDay, setActiveDay] = useState(0);
 
   const weekStart = startOfWeek(selectedDate);
   const week = rangeDays(weekStart, addDays(weekStart, 6));
 
-  const dayTasks = tasks.mockTasks.filter(t => isSameDay(t.date, selectedDate));
+  const dayTasks = tasks.filter(t => isSameDay(t.date, selectedDate));
 
   return (
       <div className={styles.container}>
@@ -41,26 +46,16 @@ const Schedule: FC = (props) => {
           </div>
         </header>
 
-        <ul className={styles.weekRow}>
-          {week.map(d => (
-              <WeekDay
-                  key={d.toISOString()}
-                  date={d}
-                  selected={isSameDay(d, selectedDate)}
-                  onClick={() => setSelectedDate(d)}
-                  hasTask={tasks.mockTasks.some(t => isSameDay(t.date, d))}
-              />
-          ))}
-        </ul>
+        <WeekRow week={week}/>
 
         <TaskList tasks={dayTasks}/>
 
         {calendarOpen && (
             <CalendarModal
-                tasks={tasks.mockTasks}
+                tasks={tasks}
                 monthDate={selectedDate}
                 onSelect={d => {
-                  setSelectedDate(d);
+                  dispatch(setSelectedDate(d));
                   setCalendarOpen(false);
                 }}
                 onClose={() => setCalendarOpen(false)}

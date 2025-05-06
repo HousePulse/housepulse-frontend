@@ -3,17 +3,13 @@ import * as styles from './RoomList.module.css'
 import {useAppDispatch, useAppSelector} from "@store/store";
 import {FiHome, FiPlus, FiTv} from "react-icons/fi";
 import {FaShower} from "react-icons/fa";
-import RoomItem from "@components/Sidebar/RoomItem/RoomItem";
-import RoomIcon, {IconBackgroundColor} from "@components/Sidebar/RoomList/RoomIcon/RoomIcon";
-
-const rooms = [
-  {name: 'Ванная', icon: <RoomIcon icon={<FaShower/>} backgroundColor={IconBackgroundColor.Cyan}/>},
-  {name: 'Весь дом', icon: <RoomIcon icon={<FiHome/>} backgroundColor={IconBackgroundColor.Green}/>},
-  {name: 'Гостиная', icon: <RoomIcon icon={<FiTv/>} backgroundColor={IconBackgroundColor.Red}/>},
-];
+import RoomButton from "@components/UI/RoomButton/RoomButton";
+import RoomIcon from "@components/Sidebar/RoomList/RoomIcon/RoomIcon";
+import {IconBackgroundColor} from "@types_app/room";
+import {roomsSelector} from "@store/selectors/selectors";
 
 const RoomList: FC = (props) => {
-  const global = useAppSelector(state => state.global);
+  const rooms = useAppSelector(roomsSelector);
   const dispatch = useAppDispatch();
 
   return (
@@ -25,8 +21,8 @@ const RoomList: FC = (props) => {
             Добавить
           </button>
         </header>
-        {rooms.map((r) => (
-            <RoomItem key={r.name} name={r.name} icon={r.icon}/>
+        {rooms.map((r, index) => (
+            <RoomButton key={index} name={r.title} icon={r.icon}/>
         ))}
       </section>
   );
