@@ -4,13 +4,14 @@ import {useAppDispatch, useAppSelector} from "@store/store";
 
 import {addDays, fmtRelativeRu, isSameDay, rangeDays, startOfWeek,} from '@utils/date';
 import CalendarModal from "@components/Schedule/CalendarModal/CalendarModal";
-import TaskList from "@components/Schedule/Task/TaskList/TaskList";
+import TaskList from "@components/Task/TaskList/TaskList";
 import {IoIosArrowDown,} from "react-icons/io";
 import Header from "@components/Header/Header";
 import {tasksSelector} from "@store/selectors/selectors";
 import {Task} from "@types_app/task";
 import WeekRow from "@components/Schedule/WeekRow/WeekRow";
 import {setSelectedDate} from "@store/globalSlice";
+import Fab from "@components/UI/Fab/Fab";
 
 const today = new Date();
 
@@ -58,6 +59,8 @@ const Schedule: FC = (props) => {
             onClose={() => setCalendarOpen(false)}
             isOpen={calendarOpen}
         />
+        <Fab onClick={() => {/* TODO: open new‑task modal */
+        }}/>
       </div>
   );
 }

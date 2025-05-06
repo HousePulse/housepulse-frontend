@@ -5,13 +5,11 @@ import SidebarNavButton from "@components/UI/SidebarNavButton/SidebarNavButton";
 import RoomList from "@components/Sidebar/RoomList/RoomList";
 import SettingsModal from "@components/Settings/SettingsModal/SettingsModal";
 import {IoIosArrowDown, IoIosSettings} from "react-icons/io";
+import {PageRouter, pageRoutes} from "@root/App/App";
 
-type Props = {
-  activeView: string;
-  onChangeView: (view: any) => void;
-};
+type Props = {};
 
-const Sidebar: React.FC<Props> = ({activeView, onChangeView}) => {
+const Sidebar: React.FC<Props> = () => {
   const global = useAppSelector(state => state.global);
   const dispatch = useAppDispatch();
 
@@ -36,16 +34,17 @@ const Sidebar: React.FC<Props> = ({activeView, onChangeView}) => {
         </header>
 
         <nav className={styles.nav}>
-          <SidebarNavButton
-              label="График"
-              active={activeView === 'schedule'}
-              onClick={() => onChangeView('schedule')}
-          />
-          <SidebarNavButton label="Все задачи" count={0} active={activeView === 'all'}
-                            onClick={() => onChangeView('all')}/>
-          <SidebarNavButton label="История" count={0} active={activeView === 'history'}
-                            onClick={() => onChangeView('history')}/>
-          <SidebarNavButton label="Статистика" active={activeView === 'stats'} onClick={() => onChangeView('stats')}/>
+          {
+            pageRoutes.map((pageRoute: PageRouter, index: number) => {
+              return (
+                  <SidebarNavButton
+                      key={index}
+                      label={pageRoute.title}
+                      routerPath={pageRoute.path}
+                  />
+              )
+            })
+          }
         </nav>
 
         <RoomList/>

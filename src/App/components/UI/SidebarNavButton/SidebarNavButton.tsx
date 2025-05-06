@@ -2,26 +2,30 @@ import React from 'react';
 import * as styles from './SidebarNavButton.module.css'
 import {useAppDispatch, useAppSelector} from "@store/store";
 import {MdKeyboardArrowRight} from "react-icons/md";
+import {NavLink} from "react-router-dom";
 
 type Props = {
   label: string;
   count?: number;
-  active?: boolean;
-  onClick: () => void;
+  routerPath: string
 };
 
-const SidebarNavButton: React.FC<Props> = ({label, count, active, onClick}) => {
+const SidebarNavButton: React.FC<Props> = ({label, count, routerPath}) => {
   const global = useAppSelector(state => state.global);
   const dispatch = useAppDispatch();
 
   return (
-      <button className={`${styles.button} ${active ? styles.active : ''}`} onClick={onClick}>
+      <NavLink to={routerPath} end
+               className={({isActive}) =>
+                   `${styles.button} ${isActive ? styles.active : ''}`
+               }>
         <p>{label}</p>
+
         <div className={styles.rightPlace}>
-          {typeof count === 'number' && <span className={styles.count}>{count}</span>}
+          {count && <span className={styles.count}>{count}</span>}
           <MdKeyboardArrowRight className={styles.arrowIcon}/>
         </div>
-      </button>
+      </NavLink>
   );
 }
 
