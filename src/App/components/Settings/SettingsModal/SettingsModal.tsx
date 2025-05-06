@@ -4,14 +4,18 @@ import {FiHome, FiLogIn, FiPlus, FiX} from 'react-icons/fi';
 import {useAppDispatch, useAppSelector} from "@store/store";
 import Modal from "@components/UI/Modal/Modal";
 
-type Props = { onClose: () => void };
+type Props = {
+  onClose: () => void,
+  isOpen: boolean
+};
 
-const SettingsModal: React.FC<Props> = ({onClose}) => {
+const SettingsModal: React.FC<Props> = ({onClose, isOpen}) => {
   const global = useAppSelector(state => state.global);
   const dispatch = useAppDispatch();
 
   return (
-      <Modal onClickBackdrop={onClose}>
+      <Modal onClose={onClose}
+             isOpen={isOpen}>
         <header className={styles.head}>
           <h3>Настройки</h3>
           <button onClick={onClose} className={styles.done}>Готово</button>

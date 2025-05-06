@@ -3,7 +3,6 @@ import * as styles from './Schedule.module.css'
 import {useAppDispatch, useAppSelector} from "@store/store";
 
 import {addDays, fmtRelativeRu, isSameDay, rangeDays, startOfWeek,} from '@utils/date';
-import WeekDay from "@components/Schedule/WeekDay/WeekDay";
 import CalendarModal from "@components/Schedule/CalendarModal/CalendarModal";
 import TaskList from "@components/Schedule/Task/TaskList/TaskList";
 import {IoIosArrowDown,} from "react-icons/io";
@@ -25,7 +24,6 @@ const Schedule: FC = (props) => {
   const today = new Date();
   const selectedDate = global.selectedDate;
   const [calendarOpen, setCalendarOpen] = useState(false);
-  const [activeDay, setActiveDay] = useState(0);
 
   const weekStart = startOfWeek(selectedDate);
   const week = rangeDays(weekStart, addDays(weekStart, 6));
@@ -50,17 +48,16 @@ const Schedule: FC = (props) => {
 
         <TaskList tasks={dayTasks}/>
 
-        {calendarOpen && (
-            <CalendarModal
-                tasks={tasks}
-                monthDate={selectedDate}
-                onSelect={d => {
-                  dispatch(setSelectedDate(d));
-                  setCalendarOpen(false);
-                }}
-                onClose={() => setCalendarOpen(false)}
-            />
-        )}
+        <CalendarModal
+            tasks={tasks}
+            monthDate={selectedDate}
+            onSelect={d => {
+              dispatch(setSelectedDate(d));
+              setCalendarOpen(false);
+            }}
+            onClose={() => setCalendarOpen(false)}
+            isOpen={calendarOpen}
+        />
       </div>
   );
 }

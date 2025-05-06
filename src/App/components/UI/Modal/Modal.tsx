@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, memo, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "@store/store";
 import * as styles from "./Modal.module.css";
 
@@ -11,27 +11,22 @@ export enum ModalSize {
 type Props = {
   children?: React.ReactNode,
   size?: ModalSize,
-  onClickBackdrop?: (...args: any[]) => any,
+  onClose: (...args: any[]) => any,
+  isOpen: boolean,
 }
 
-const Modal: FC<Props> = ({children, size = ModalSize.medium, onClickBackdrop}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const global = useAppSelector(state => state.global);
-  const dispatch = useAppDispatch();
+const Modal: FC<Props> = memo(({children, size = ModalSize.medium, onClose, isOpen}) => {
+  if (!isOpen) {
+    return null;
+  }
 
   return (
-      <div className={styles.backdrop} onClick={() => {
-        if (onClickBackdrop) {
-          onClickBackdrop();
-          return;
-        }
-        setIsOpen(!isOpen);
-      }}>
+      <div className={styles.backdrop} onClick={onClose}>
         <div className={`${styles.window} ${styles[size]}`} onClick={e => e.stopPropagation()}>
           {children}
         </div>
       </div>
   );
-}
+});
 
 export default Modal;

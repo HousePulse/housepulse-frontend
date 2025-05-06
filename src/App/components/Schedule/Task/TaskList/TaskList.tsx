@@ -38,7 +38,8 @@ const TaskList: React.FC<Props> = ({tasks}) => {
       <div className={styles.taskListContainer}>
         <div className={styles.header}>
           <p>{tasks.length} Tasks</p>
-          <TaskListSortButton onClick={() => {}}/>
+          <TaskListSortButton onClick={() => {
+          }}/>
         </div>
         <ul className={styles.list}>
           {tasks.map(t => (
@@ -49,7 +50,9 @@ const TaskList: React.FC<Props> = ({tasks}) => {
               </li>
           ))}
         </ul>
-        {openTask && <TaskModal task={openTask} onClose={() => setOpenTask(null)}/>}
+        <TaskModal task={openTask}
+                   onClose={() => setOpenTask(null)}
+                   isOpen={!!openTask}/>
       </div>
   );
 };

@@ -3,7 +3,6 @@ import {useAppDispatch, useAppSelector} from "@store/store";
 import * as styles from "./Sidebar.module.css";
 import SidebarNavButton from "@components/UI/SidebarNavButton/SidebarNavButton";
 import RoomList from "@components/Sidebar/RoomList/RoomList";
-import SettingsButton from "@components/Settings/SettingsButton/SettingsButton";
 import SettingsModal from "@components/Settings/SettingsModal/SettingsModal";
 import {IoIosArrowDown, IoIosSettings} from "react-icons/io";
 
@@ -42,14 +41,16 @@ const Sidebar: React.FC<Props> = ({activeView, onChangeView}) => {
               active={activeView === 'schedule'}
               onClick={() => onChangeView('schedule')}
           />
-          <SidebarNavButton label="Все задачи" count={0} active={activeView === 'all'} onClick={() => onChangeView('all')}/>
+          <SidebarNavButton label="Все задачи" count={0} active={activeView === 'all'}
+                            onClick={() => onChangeView('all')}/>
           <SidebarNavButton label="История" count={0} active={activeView === 'history'}
                             onClick={() => onChangeView('history')}/>
           <SidebarNavButton label="Статистика" active={activeView === 'stats'} onClick={() => onChangeView('stats')}/>
         </nav>
 
         <RoomList/>
-        {settingsOpen && <SettingsModal onClose={() => setSettingsOpen(false)}/>}
+        <SettingsModal onClose={() => setSettingsOpen(false)}
+                       isOpen={settingsOpen}/>
       </aside>
   );
 }

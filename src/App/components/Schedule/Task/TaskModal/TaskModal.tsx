@@ -15,26 +15,32 @@ const Row: React.FC<{ label: string; value?: string; rightIcon?: React.ReactNode
         </div>
     );
 
-type Props = { task: Task; onClose: () => void };
+type Props = {
+  task: Task | null;
+  onClose: () => void,
+  isOpen: boolean
+};
 
-const TaskModal: React.FC<Props> = ({task, onClose}) => {
+const TaskModal: React.FC<Props> = ({task, onClose, isOpen}) => {
   const global = useAppSelector(state => state.global);
   const dispatch = useAppDispatch();
 
+  if (!task) {
+    return null;
+  }
+
   return (
-      <Modal onClickBackdrop={onClose}>
-        {/* HEADER */}
+      <Modal onClose={onClose}
+             isOpen={isOpen}>
         <header className={styles.head}>
           <button className={styles.back} onClick={onClose}><FiChevronLeft/> Назад</button>
           <span className={styles.title}>Детали задачи</span>
           <FiMoreVertical className={styles.menu}/>
         </header>
 
-        {/* TITLE + DESCRIPTION */}
         <input className={styles.inputTitle} defaultValue={task.title}/>
         <textarea className={styles.inputDesc} rows={2} defaultValue={task.description || ''}/>
 
-        {/* PARAMS */}
         <div className={styles.params}>
           <Row label="Комната" value={task.room}/>
           <Row label="Повтор" value="Каждые 2 недели" rightIcon="▼"/>
@@ -47,10 +53,8 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
           </Row>
         </div>
 
-        {/* LOCKED */}
         <button className={styles.locked}>Назначить задачу 🔒</button>
 
-        {/* FOOTER */}
         <footer className={styles.footer}>
           <button className={styles.ok}>✓ Выполнить</button>
           <button className={styles.skip}>→ Пропустить</button>

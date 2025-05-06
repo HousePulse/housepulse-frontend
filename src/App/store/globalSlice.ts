@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 let initialState = {
     sidebarActive: true,
-    selectedDate: new Date()
+    selectedDate: new Date(),
 }
 
 const globalSlice = createSlice({
