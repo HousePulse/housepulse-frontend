@@ -1,0 +1,68 @@
+import React from 'react';
+import * as styles from './SettingsModal.module.css';
+import {FiHome, FiLogIn, FiPlus, FiX} from 'react-icons/fi';
+import {useAppDispatch, useAppSelector} from "@store/store";
+
+type Props = { onClose: () => void };
+
+const SettingsModal: React.FC<Props> = ({onClose}) => {
+  const global = useAppSelector(state => state.global);
+  const dispatch = useAppDispatch();
+
+  return (
+      <div className={styles.backdrop} onClick={onClose}>
+        <div className={styles.window} onClick={e => e.stopPropagation()}>
+          <header className={styles.head}>
+            <h3>Настройки</h3>
+            <button onClick={onClose} className={styles.done}>Готово</button>
+          </header>
+
+          {/* Профиль */}
+          <section className={styles.profile}>
+            <div className={styles.avatar}>I</div>
+            <div>
+              <div className={styles.name}>Isupov Grigoriy</div>
+              <div className={styles.email}>isupov.grigoriy@mail.ru</div>
+            </div>
+            <FiX className={styles.chevron}/>
+          </section>
+
+          {/* Баннер премиум */}
+          <section className={styles.banner}>
+            <span>Разблокируйте премиум функции</span>
+            <small>Начните бесплатную версию или получите пожизненный доступ</small>
+          </section>
+
+          {/* Список домов */}
+          <section className={styles.homes}>
+            <div className={styles.caption}>1 дом</div>
+
+            <button className={styles.homeItem}>
+              <FiHome/>
+              <div className={styles.homeText}>
+                <span>Дом</span>
+                <small>1 чел.</small>
+              </div>
+            </button>
+
+            <button className={`${styles.homeItem} ${styles.locked}`}>
+              <FiPlus/>
+              <span>Добавить новый дом</span>
+            </button>
+
+            <button className={`${styles.homeItem} ${styles.locked}`}>
+              <FiLogIn/>
+              <span>Войти в другой дом</span>
+            </button>
+          </section>
+
+          {/* Курортный режим */}
+          <button className={`${styles.vacation} ${styles.locked}`}>
+            Режим отпуска
+          </button>
+        </div>
+      </div>
+  );
+}
+
+export default SettingsModal;

@@ -1,0 +1,68 @@
+:root {
+  --color-bg: #000;
+  --color-panel: #1a1a1a;
+  --color-text: #fff;
+  --color-text-secondary: #9e9da3;
+  --color-muted: #8a8a8a;
+  --color-border: #303030;
+  --color-accent: #00c08b;
+
+  --red: #fd7053;
+  --orange: #f79f4d;
+  --yellow: #f9ba1e;
+  --green: #81c43e;
+  --blue: #458cea;
+  --purple: #9b7de4;
+  --cyan: #46ccde;
+  --gray: #1c1c1e;
+  
+  --radius: 0.75rem;
+  --spacing: 0.75rem;
+  --font-family: 'Roboto', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: all 75ms ease;
+  position: relative;
+  font-family: var(--font-family), sans-serif;
+}
+
+html {
+  @media screen and (min-width: 1600px) {
+    font-size: max(1rem, 1vw);
+  }
+
+  @media screen and (min-width: 2560px) {
+    font-size: 0.75vw;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #1E1E1E;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 0.25rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+input, button, textarea, select {
+  font-family: inherit;
+}
+
+button {
+  outline: none;
+  border: none;
+  background: transparent;
+}
