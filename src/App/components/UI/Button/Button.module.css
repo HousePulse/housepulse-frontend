@@ -1,0 +1,18 @@
+.button {
+  width: 100%;
+  background: var(--color-panel);
+
+  color: var(--color-text);
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+
+  border: none;
+  border-radius: var(--radius);
+
+  padding: calc(var(--spacing) * 1.2) var(--spacing);
+}
+
+.button:hover {
+  background: #252525;
+}

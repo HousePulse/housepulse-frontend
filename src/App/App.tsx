@@ -23,7 +23,7 @@ export const pageRoutes: PageRouter[] = [
   {
     title: 'График',
     path: `/${pageRoutersName.schedule}`,
-    element: <Schedule/>
+    element: <Schedule/>,
   },
   {
     title: 'Все задачи',
@@ -57,6 +57,7 @@ const router = createHashRouter([
     element: <Layout/>,
     children: [
       ...pageRoutes,
+      {index: true, element: <Navigate to={"/" + pageRoutersName.schedule} replace/>},
       {path: '*', element: <Navigate to="/" replace/>},
     ],
   },

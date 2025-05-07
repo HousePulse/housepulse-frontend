@@ -66,3 +66,33 @@
     color: var(--color-text);
   }
 }
+
+.sidebarNavButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:hover {
+    background: #252525;
+  }
+
+  &.active {
+    background: #2c2c2c;
+  }
+
+  .rightPlace {
+    display: flex;
+    align-items: center;
+
+    .count {
+      font-size: 1rem;
+      color: var(--color-text);
+    }
+
+    .arrowIcon {
+      font-size: 1.25rem;
+      color: var(--color-muted);
+    }
+  }
+
+}
