@@ -16,14 +16,26 @@ type Props = {
 }
 
 const Modal: FC<Props> = memo(({children, size = ModalSize.medium, onClose, position}) => {
-  const style: React.CSSProperties = position
-      ? {
-        position: 'fixed',
-        top: position.y,
-        left: position.x,
-        transform: 'translate(-50%, -50%)'
+  let style: React.CSSProperties = {};
+  if (position) {
+    let blockPos: any = {
+      left: position.x,
+    }
+
+    if (position.x > window.innerWidth * 0.7) {
+      blockPos = {
+        right: window.innerWidth - position.x,
       }
-      : {};
+    }
+
+    style = {
+      position: 'fixed',
+      top: position.y,
+      ...blockPos,
+      transform: 'translate(-5%, -5%)'
+    };
+  }
+
 
   return (
       <div className={styles.backdrop}
