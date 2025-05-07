@@ -7,6 +7,7 @@ import sleepImage from '@assets/img/sleep.png';
 import {BiSortAlt2} from "react-icons/bi";
 import {diffInDays} from "@utils/date";
 import {RxCountdownTimer} from "react-icons/rx";
+import Button from "@components/UI/Button/Button";
 
 type Props = {
   tasks: Task[],
@@ -44,13 +45,15 @@ const TaskList: React.FC<Props> = ({tasks, isShownHeaderInfo}) => {
             <TaskListSortButton onClick={() => {
             }}/>
         </div>}
-        <ul className={styles.list}>
+        <div className={styles.list}>
           {tasks.map(t => {
             const diffDays = diffInDays(t.date, new Date());
             const isExpired = diffDays >= 1;
 
             return (
-                <li key={t.id} className={styles.item} onClick={() => setOpenTask(t)}>
+                <Button key={t.id}
+                        className={styles.item}
+                        onClick={() => setOpenTask(t)}>
                   <h4>{t.title}</h4>
                   <p>{t.description}</p>
                   {isExpired && <div className={styles.expired}>
@@ -58,10 +61,10 @@ const TaskList: React.FC<Props> = ({tasks, isShownHeaderInfo}) => {
                       <p>Просрочена {diffDays} д</p>
                   </div>}
                   <span className={styles.room}>{t.room}</span>
-                </li>
+                </Button>
             )
           })}
-        </ul>
+        </div>
         <TaskModal task={openTask}
                    onClose={() => setOpenTask(null)}
                    isOpen={!!openTask}/>
