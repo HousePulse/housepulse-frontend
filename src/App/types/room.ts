@@ -1,4 +1,5 @@
 import React from "react";
+import {Task} from "@types_app/task";
 export enum RoomIcon {
   Shower = 'shower',
   Home = 'home',
@@ -16,7 +17,9 @@ export enum IconBackgroundColor {
 }
 
 export interface Room {
+  id: number;
   title: string;
   icon: RoomIcon;
   backgroundColor: IconBackgroundColor;
+  tasks?: number[];
 }

@@ -6,16 +6,14 @@ import Modal from "@components/UI/Modal/Modal";
 
 type Props = {
   onClose: () => void,
-  isOpen: boolean
 };
 
-const SettingsModal: React.FC<Props> = ({onClose, isOpen}) => {
+const SettingsModal: React.FC<Props> = ({onClose}) => {
   const global = useAppSelector(state => state.global);
   const dispatch = useAppDispatch();
 
   return (
-      <Modal onClose={onClose}
-             isOpen={isOpen}>
+      <Modal onClose={onClose}>
         <header className={styles.head}>
           <h3>Настройки</h3>
           <button onClick={onClose} className={styles.done}>Готово</button>

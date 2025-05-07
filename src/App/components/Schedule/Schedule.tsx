@@ -6,7 +6,6 @@ import {addDays, diffInDays, fmtRelativeRu, isSameDay, rangeDays, startOfWeek,} 
 import CalendarModal from "@components/Schedule/CalendarModal/CalendarModal";
 import TaskList from "@components/Task/TaskList/TaskList";
 import {IoIosArrowDown,} from "react-icons/io";
-import Header from "@components/Header/Header";
 import {tasksSelector} from "@store/selectors/selectors";
 import {Task} from "@types_app/task";
 import WeekRow from "@components/Schedule/WeekRow/WeekRow";
@@ -51,7 +50,7 @@ const Schedule: FC = (props) => {
                     isShownHeaderInfo={true}/>
         </div>
 
-        <CalendarModal
+        {calendarOpen && <CalendarModal
             tasks={tasks}
             monthDate={selectedDate}
             onSelect={d => {
@@ -59,8 +58,8 @@ const Schedule: FC = (props) => {
               setCalendarOpen(false);
             }}
             onClose={() => setCalendarOpen(false)}
-            isOpen={calendarOpen}
-        />
+        />}
+
         <Fab onClick={() => {/* TODO: open new‑task modal */
         }}/>
       </div>

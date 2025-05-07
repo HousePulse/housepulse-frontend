@@ -11,7 +11,7 @@ export interface ITaskRepeat {
 }
 
 export interface Task {
-  id: string;
+  id: number;
   title: string;
   room: string;
   date: Date;

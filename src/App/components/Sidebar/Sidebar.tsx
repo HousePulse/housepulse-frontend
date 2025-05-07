@@ -69,8 +69,7 @@ const Sidebar: React.FC<Props> = () => {
         </nav>
 
         <RoomList/>
-        <SettingsModal onClose={() => setSettingsOpen(false)}
-                       isOpen={settingsOpen}/>
+        {settingsOpen && <SettingsModal onClose={() => setSettingsOpen(false)}/>}
       </aside>
   );
 }

@@ -27,7 +27,13 @@ const TaskList: React.FC<Props> = ({tasks, isShownHeaderInfo}) => {
   const global = useAppSelector(state => state.global);
   const dispatch = useAppDispatch();
 
-  const [openTask, setOpenTask] = useState<Task | null>(null);
+  const [openTaskId, setOpenTaskId] = useState<number | null>(null);
+  const openTask = tasks.find(t => t.id === openTaskId) ?? null;
+
+  const handleOpen = (id: number) => setOpenTaskId(id);
+  const handleClose = () => setOpenTaskId(null);
+
+  console.log(openTask)
 
   if (!tasks.length)
     return (
@@ -46,14 +52,14 @@ const TaskList: React.FC<Props> = ({tasks, isShownHeaderInfo}) => {
             }}/>
         </div>}
         <div className={styles.list}>
-          {tasks.map(t => {
+          {tasks.map((t, index) => {
             const diffDays = diffInDays(t.date, new Date());
             const isExpired = diffDays >= 1;
 
             return (
-                <Button key={t.id}
+                <Button key={index}
                         className={styles.item}
-                        onClick={() => setOpenTask(t)}>
+                        onClick={() => handleOpen(t.id)}>
                   <h4>{t.title}</h4>
                   <p>{t.description}</p>
                   {isExpired && <div className={styles.expired}>
@@ -65,9 +71,8 @@ const TaskList: React.FC<Props> = ({tasks, isShownHeaderInfo}) => {
             )
           })}
         </div>
-        <TaskModal task={openTask}
-                   onClose={() => setOpenTask(null)}
-                   isOpen={!!openTask}/>
+        {!!openTask && <TaskModal task={openTask}
+                                  onClose={handleClose}/>}
       </div>
   );
 };

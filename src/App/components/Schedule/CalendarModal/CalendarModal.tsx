@@ -10,13 +10,9 @@ type Props = {
   tasks: Task[];
   onSelect: (d: Date) => void;
   onClose: () => void;
-  isOpen: boolean;
 };
 
-const CalendarModal: React.FC<Props> = ({monthDate, tasks, onSelect, onClose, isOpen}) => {
-  const global = useAppSelector(state => state.global);
-  const dispatch = useAppDispatch();
-
+const CalendarModal: React.FC<Props> = ({monthDate, tasks, onSelect, onClose}) => {
   const [cursor, setCursor] = useState(monthDate);
 
   const prevMonth = useCallback(() => setCursor(addMonths(cursor, -1)), [cursor]);
@@ -27,8 +23,7 @@ const CalendarModal: React.FC<Props> = ({monthDate, tasks, onSelect, onClose, is
 
   return (
       <Modal onClose={onClose}
-             size={ModalSize.big}
-             isOpen={isOpen}>
+             size={ModalSize.big}>
         <header className={styles.head}>
           <button className={styles.arrow} onClick={prevMonth}>‹</button>
           <span className={styles.monthLabel}>

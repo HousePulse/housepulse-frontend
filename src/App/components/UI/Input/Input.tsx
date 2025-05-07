@@ -1,15 +1,18 @@
 import React, {FC} from 'react';
-import * as style from './Input.module.css'
 import {useAppDispatch, useAppSelector} from "@store/store";
+import * as styles from "@components/Task/TaskModal/TaskModal.module.css";
 
-const Input: FC = (props) => {
+type Props = {
+  text: string
+}
+
+const Input: FC<Props> = ({text}) => {
   const global = useAppSelector(state => state.global);
   const dispatch = useAppDispatch();
 
   return (
-      <div className={style.block}>
-        <h1>{123}</h1>
-      </div>
+      <input className={styles.inputTitle}
+             defaultValue={text}/>
   );
 }
 
