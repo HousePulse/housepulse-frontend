@@ -12,19 +12,31 @@
   max-height: 92vh;
   overflow-y: auto;
   background: #1f1f1f;
-  border-radius: 1rem;
-  padding: 0 0 1.5rem;
   color: var(--color-text);
+
+  &.fit {
+    width: fit-content;
+    height: fit-content;
+    border-radius: 0.5rem;
+  }
+
+  &.very-small {
+    width: min(20rem, 92vw);
+    border-radius: 0.5rem;
+  }
 
   &.small {
     width: min(30rem, 92vw);
+    border-radius: 0.75rem;
   }
 
   &.medium {
     width: min(45rem, 92vw);
+    border-radius: 1rem;
   }
 
   &.big {
     width: min(60rem, 92vw);
+    border-radius: 1rem;
   }
 }

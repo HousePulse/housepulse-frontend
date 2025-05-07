@@ -1,0 +1,125 @@
+.container {
+  width: max-content;
+  max-width: 15vw;
+  color: var(--color-text);
+
+  font-family: sans-serif;
+
+  background: var(--gray);
+  border-radius: 0.5rem;
+
+  padding: 1rem;
+}
+
+.header {
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: var(--color-muted);
+
+  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.wheelsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  border-radius: 0.5rem;
+  background-color: var(--color-panel);
+
+  padding: 0.5rem;
+  margin-bottom: 0.75rem;
+
+  .summary {
+    font-size: 1rem;
+    color: #00c982;
+
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .wheels {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+
+.wheel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+
+  height: max-content;
+
+  overflow: hidden;
+}
+
+.wheelItem {
+  width: 100%;
+  height: 1.5rem;
+  line-height: 1rem;
+
+  text-align: center;
+  font-size: 1rem;
+  color: var(--color-muted);
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.selected {
+  color: var(--color-text);
+  font-weight: bold;
+}
+
+.infoText {
+  font-size: 0.75rem;
+  text-wrap: pretty;
+  color: var(--color-muted);
+
+  margin-bottom: 0.75rem;
+}
+
+.daysHeader {
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+
+  margin-bottom: 0.5rem;
+}
+
+.days {
+  display: flex;
+  justify-content: space-between;
+}
+
+.day {
+  width: 2rem;
+  height: 2rem;
+
+  line-height: 2rem;
+  text-align: center;
+  color: var(--color-muted);
+
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+}
+
+.daySelected {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.dayDisabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

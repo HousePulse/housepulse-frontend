@@ -20,7 +20,7 @@ const Textarea: FC<PropsType> = ({text}) => {
 
   return (
       <textarea className={style.textarea}
-                rows={2} ref={textareaRef}
+                rows={1} ref={textareaRef}
                 defaultValue={text}
                 onChange={(e) => setValue(e.target.value)}/>
   );

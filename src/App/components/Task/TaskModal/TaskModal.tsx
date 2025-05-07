@@ -11,7 +11,7 @@ import RoomPicker from "@components/Room/RoomPicker/RoomPicker";
 import {roomsSelector} from "@store/selectors/selectors";
 import {Room} from "@types_app/room";
 import {getIconByRoom, RoomIconSize} from "@components/Room/RoomIcon/RoomIcon";
-import { BsArrowsVertical } from "react-icons/bs";
+import {RepeatChooser} from "@components/Task/RepeatChooser/RepeatChooser";
 
 const Row: React.FC<{
   label: string,
@@ -59,54 +59,56 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
 
   return (
       <Modal onClose={onClose}>
-        <header className={styles.head}>
-          <button className={styles.back} onClick={onClose}><FiChevronLeft/> Назад</button>
-          <span className={styles.title}>Детали задачи</span>
-          <FiMoreVertical className={styles.menu}/>
-        </header>
+        <div className={styles.container}>
+          <header className={styles.head}>
+            <button className={styles.back} onClick={onClose}><FiChevronLeft/> Назад</button>
+            <span className={styles.title}>Детали задачи</span>
+            <FiMoreVertical className={styles.menu}/>
+          </header>
 
-        <Input text={task.title}/>
-        <Textarea text={task.description}/>
+          <Input text={task.title}/>
+          <Textarea text={task.description}/>
 
-        <div className={styles.params}>
-          <div className={styles.row}
-               onClick={roomPickerOpenHandler}>
-            <p>Комната</p>
-            <span className={styles.inline}>
+          <div className={styles.params}>
+            <div className={styles.row}
+                 onClick={roomPickerOpenHandler}>
+              <p>Комната</p>
+              <span className={styles.inline}>
               {getIconByRoom(room, RoomIconSize.small)}
-              <p className={styles.value}>{task.room}</p>
+                <p className={styles.value}>{task.room}</p>
             </span>
+            </div>
+
+            <div className={styles.row}>
+              <p>Повтор</p>
+              <RepeatChooser onChange={rule => console.log('Новое правило:', rule)}/>
+            </div>
+
+            <Row label="Срок">
+              <button className={styles.dueBtn}>пн, 5 мая</button>
+              <span className={styles.overdue}>Просрочена 1 д</span>
+            </Row>
+
+            <Row label="Напоминание">
+              <input type="checkbox"/>
+            </Row>
+            
+            <div className={styles.row}>
+              <p>Назначить задачу</p>
+            </div>
+
           </div>
 
-          <div className={styles.row}>
-            <p>Повтор</p>
-            <span className={styles.inline}>
-              <p className={styles.value}>Каждые 2 недели</p>
-              <BsArrowsVertical className={styles.icon}/>
-            </span>
-          </div>
 
-          <Row label="Срок">
-            <button className={styles.dueBtn}>пн, 5 мая</button>
-            <span className={styles.overdue}>Просрочена 1 д</span>
-          </Row>
+          <footer className={styles.footer}>
+            <button className={styles.ok}>✓ Выполнить</button>
+            <button className={styles.skip}>→ Пропустить</button>
+          </footer>
 
-          <Row label="Напоминание">
-            <input type="checkbox"/>
-          </Row>
-
+          {point && <RoomPicker position={point}
+                                task={task}
+                                onClose={closeRoomPicker}/>}
         </div>
-
-        <button className={styles.locked}>Назначить задачу 🔒</button>
-
-        <footer className={styles.footer}>
-          <button className={styles.ok}>✓ Выполнить</button>
-          <button className={styles.skip}>→ Пропустить</button>
-        </footer>
-
-        {point && <RoomPicker position={point}
-                              task={task}
-                              onClose={closeRoomPicker}/>}
       </Modal>
   );
 }

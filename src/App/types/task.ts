@@ -1,8 +1,10 @@
 export enum TaskRepeat {
   Day = 0,
   Week = 1,
+  Week2 = 2,
   Month = 3,
-  Year = 4
+  Month3 = 4,
+  Month6 = 5,
 }
 
 export interface ITaskRepeat {

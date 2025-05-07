@@ -1,0 +1,79 @@
+.select {
+  display: inline-block;
+  position: relative;
+  background-color: transparent;
+
+  font-family: sans-serif;
+
+  --border-radius: 0.1rem;
+}
+
+.toggleButton {
+  display: flex;
+  align-items: center;
+
+  width: max-content;
+
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: left;
+  cursor: pointer;
+
+  color: var(--color-text);
+
+  /*padding: 0.5rem;*/
+
+  svg {
+    color: var(--color-muted);
+  }
+}
+
+.dropdown {
+  width: max-content;
+
+  background: #1a1a1a;
+  /*border-radius: var(--border-radius);*/
+
+  -webkit-box-shadow: 0 0 2rem 1rem rgba(0, 0, 0, 0.36);
+  -moz-box-shadow: 0 0 2rem 1rem rgba(0, 0, 0, 0.36);
+  box-shadow: 0 0 2rem 1rem rgba(0, 0, 0, 0.36);
+
+  list-style: none;
+
+  margin: 0;
+
+  z-index: 10;
+}
+
+.option {
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  background-color: #202020;
+  font-size: 1rem;
+  text-align: left;
+
+  --margin-inline: 0.5rem;
+
+  &:first-child {
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    margin-bottom: var(--margin-inline);
+  }
+
+  &:last-child {
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    margin-top: var(--margin-inline);
+  }
+}
+
+.option:hover {
+  background-color: #424242;
+}
+
+.optionSelected {
+  background: #424242;
+}
+
+.checkmark {
+  float: right;
+  color: #1890ff;
+}
