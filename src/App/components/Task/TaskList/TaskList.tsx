@@ -23,6 +23,17 @@ const TaskListSortButton: React.FC<{ onClick: () => void }> = ({onClick}) => {
   )
 }
 
+const taskWords = ['задача', 'задачи', 'задач'];
+
+function numWords(value: number, words: string[] = taskWords) {
+  value = Math.abs(value) % 100;
+  let num = value % 10;
+  if (value > 10 && value < 20) return words[2];
+  if (num > 1 && num < 5) return words[1];
+  if (num == 1) return words[0];
+  return words[2];
+}
+
 const TaskList: React.FC<Props> = ({tasks, isShownHeaderInfo}) => {
   const global = useAppSelector(state => state.global);
   const dispatch = useAppDispatch();
@@ -32,8 +43,6 @@ const TaskList: React.FC<Props> = ({tasks, isShownHeaderInfo}) => {
 
   const handleOpen = (id: number) => setOpenTaskId(id);
   const handleClose = () => setOpenTaskId(null);
-
-  console.log(openTask)
 
   if (!tasks.length)
     return (
@@ -47,7 +56,7 @@ const TaskList: React.FC<Props> = ({tasks, isShownHeaderInfo}) => {
   return (
       <div className={styles.taskListContainer}>
         {isShownHeaderInfo && <div className={styles.header}>
-            <p>{tasks.length} Tasks</p>
+            <p>{tasks.length} {numWords(tasks.length)}</p>
             <TaskListSortButton onClick={() => {
             }}/>
         </div>}

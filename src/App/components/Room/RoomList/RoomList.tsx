@@ -17,7 +17,8 @@ const RoomList: FC = (props) => {
             ＋ Добавить
           </button>
         </header>
-        <RoomListItems onRoomClick={(roomId) => {}}/>
+        <RoomListItems onRoomClick={(roomId) => {
+        }}/>
       </section>
   );
 }

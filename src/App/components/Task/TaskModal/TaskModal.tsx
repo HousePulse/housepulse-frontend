@@ -8,6 +8,10 @@ import Textarea from "@components/UI/Textarea/Textarea";
 import Input from "@components/UI/Input/Input";
 import {Point} from "@types_app/general";
 import RoomPicker from "@components/Room/RoomPicker/RoomPicker";
+import {roomsSelector} from "@store/selectors/selectors";
+import {Room} from "@types_app/room";
+import {getIconByRoom, RoomIconSize} from "@components/Room/RoomIcon/RoomIcon";
+import { BsArrowsVertical } from "react-icons/bs";
 
 const Row: React.FC<{
   label: string,
@@ -32,6 +36,10 @@ type Props = {
 
 const TaskModal: React.FC<Props> = ({task, onClose}) => {
   const global = useAppSelector(state => state.global);
+  const rooms = useAppSelector(roomsSelector);
+
+  const room: Room | undefined = rooms.find(r => r.title === task.room)
+
   const dispatch = useAppDispatch();
 
   const [point, setPoint] = React.useState<Point | null>(null)
@@ -61,17 +69,32 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
         <Textarea text={task.description}/>
 
         <div className={styles.params}>
-          <Row label="Комната"
-               value={task.room}
-               onClick={roomPickerOpenHandler}/>
-          <Row label="Повтор" value="Каждые 2 недели" rightIcon="▼"/>
+          <div className={styles.row}
+               onClick={roomPickerOpenHandler}>
+            <p>Комната</p>
+            <span className={styles.inline}>
+              {getIconByRoom(room, RoomIconSize.small)}
+              <p className={styles.value}>{task.room}</p>
+            </span>
+          </div>
+
+          <div className={styles.row}>
+            <p>Повтор</p>
+            <span className={styles.inline}>
+              <p className={styles.value}>Каждые 2 недели</p>
+              <BsArrowsVertical className={styles.icon}/>
+            </span>
+          </div>
+
           <Row label="Срок">
             <button className={styles.dueBtn}>пн, 5 мая</button>
             <span className={styles.overdue}>Просрочена 1 д</span>
           </Row>
+
           <Row label="Напоминание">
             <input type="checkbox"/>
           </Row>
+
         </div>
 
         <button className={styles.locked}>Назначить задачу 🔒</button>
