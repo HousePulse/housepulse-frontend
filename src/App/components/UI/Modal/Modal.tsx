@@ -1,7 +1,6 @@
 import React, {FC, memo, useEffect, useState} from 'react';
 import * as styles from "./Modal.module.css";
 import {Point} from "@types_app/general"
-import debounce from 'lodash.debounce';
 
 export enum ModalSize {
   fit = "fit",
@@ -17,24 +16,6 @@ type Props = {
   onClose: (...args: any[]) => any,
   position?: Point,
 }
-
-const useWindowSize = () => {
-  const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
-
-  useEffect(() => {
-    const debouncedResizeHandler = debounce(() => {
-      setSize([window.innerWidth, window.innerHeight]);
-    }, 100);
-
-    window.addEventListener('resize', debouncedResizeHandler);
-    return () => {
-      debouncedResizeHandler.cancel();
-      window.removeEventListener('resize', debouncedResizeHandler);
-    };
-  }, []);
-
-  return size;
-};
 
 const Modal: FC<Props> = memo(({children, size = ModalSize.medium, onClose, position}) => {
   let style: React.CSSProperties = {};

@@ -1,6 +1,6 @@
 .container {
   width: max-content;
-  max-width: 15vw;
+  max-width: min(20rem, 20vw);
   color: var(--color-text);
 
   font-family: sans-serif;
@@ -97,13 +97,23 @@
 .days {
   display: flex;
   justify-content: space-between;
+  /*gap: 0.5rem;*/
 }
 
 .day {
-  width: 2rem;
-  height: 2rem;
+  --size: 2rem;
 
-  line-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: var(--size);
+  min-height: var(--size);
+
+  padding: 0.1rem;
+
+  font-size: calc(var(--size) * 0.5);
+  line-height: 100%;
   text-align: center;
   color: var(--color-muted);
 
