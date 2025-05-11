@@ -1,0 +1,32 @@
+:root {
+  --wheel-item-height: 2rem;
+}
+
+.wheel {
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+
+  &.hideScrollBar::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.hideScrollBar {
+    scrollbar-width: none;
+  }
+}
+
+.wheelItem {
+  height: var(--wheel-item-height);
+  line-height: var(--wheel-item-height);
+  text-align: center;
+  user-select: none;
+  cursor: pointer;
+  color: var(--color-muted);
+}
+
+.selected {
+  font-weight: bold;
+  color: var(--color-text);
+}

@@ -13,6 +13,7 @@ import {RepeatChooser} from "@components/Task/RepeatChooser/RepeatChooser";
 import {diffInDays, fmtRelativeRu} from "@utils/date";
 import CalendarModal from "@components/ModalComponents/CalendarModal/CalendarModal";
 import {useContextPoint} from "@utils/hooks";
+import Checkbox from "@components/UI/Checkbox/Checkbox";
 
 type Props = {
   task: Task;
@@ -91,7 +92,7 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
 
             <div className={styles.row}>
               <p>Напоминание</p>
-              <input type="checkbox"/>
+              <Checkbox onChange={() => {}}/>
             </div>
           </section>
 

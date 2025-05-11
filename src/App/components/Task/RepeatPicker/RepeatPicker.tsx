@@ -1,5 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import * as styles from './RepeatPicker.module.css';
+import {Wheel} from "@components/UI/Wheel/Wheel";
 
 export enum WeekDays {
   Mon = 'Mon',
@@ -97,44 +98,21 @@ const RepeatPicker: React.FC<RepeatPickerProps> = ({
         <div className={styles.wheelsContainer}>
           <div className={styles.summary}>{summary}</div>
           <div className={styles.wheels}>
-            {/* колесо чисел */}
-            <div
-                className={styles.wheel}
-                onWheel={handleWheel(NUMBERS, count, setCount)}
-            >
-              {numsWindow.map(n => (
-                  <div
-                      key={n}
-                      className={`${styles.wheelItem} ${
-                          n === count ? styles.selected : ''
-                      }`}
-                      onClick={() => setCount(n)} // выбор кликом
-                  >
-                    {n}
-                  </div>
-              ))}
-            </div>
-
-            {/* колесо типов */}
-            <div
-                className={styles.wheel}
-                onWheel={handleWheel(UNITS, unit, setUnit)}
-            >
-              {unitsWindow.map(u => (
-                  <div
-                      key={u}
-                      className={`${styles.wheelItem} ${
-                          u === unit ? styles.selected : ''
-                      }`}
-                      onClick={() => setUnit(u)} // выбор кликом
-                  >
-                    {u}
-                  </div>
-              ))}
-            </div>
+            <Wheel
+              items={Array.from({ length: 30 }, (_, i) => i + 1)}
+              selected={count}
+              onSelect={setCount}
+              windowSize={3}
+            />
+            <Wheel
+              items={[Units.Day, Units.Week, Units.Month, Units.Year]}
+              selected={unit}
+              onSelect={setUnit}
+              windowSize={3}
+              renderItem={u => u.toLowerCase()}
+            />
           </div>
         </div>
-
         <div className={styles.infoText}>
           Сроки выполнения задач будут рассчитаны на основе даты завершения
         </div>
