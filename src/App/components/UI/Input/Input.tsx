@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from "@store/store";
 import * as styles from "./Input.module.css";
 
 type Props = {
-  text: string
+  text: string,
 }
 
 const Input: FC<Props> = ({text}) => {

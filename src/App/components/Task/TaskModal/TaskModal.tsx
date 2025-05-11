@@ -12,22 +12,7 @@ import {roomsSelector} from "@store/selectors/selectors";
 import {Room} from "@types_app/room";
 import {getIconByRoom, RoomIconSize} from "@components/Room/RoomIcon/RoomIcon";
 import {RepeatChooser} from "@components/Task/RepeatChooser/RepeatChooser";
-
-const Row: React.FC<{
-  label: string,
-  value?: string,
-  rightIcon?: React.ReactNode,
-  children?: React.ReactNode,
-  onClick?: (...args: any[]) => any
-}> = ({label, value, rightIcon, children, onClick}) => (
-    <div className={styles.row}
-         onClick={onClick}>
-      <p>{label}</p>
-      {value && <p className={styles.value}>{value}</p>}
-      {children}
-      {rightIcon && <p className={styles.icon}>{rightIcon}</p>}
-    </div>
-);
+import {diffInDays} from "@utils/date";
 
 type Props = {
   task: Task;
@@ -35,14 +20,15 @@ type Props = {
 };
 
 const TaskModal: React.FC<Props> = ({task, onClose}) => {
-  const global = useAppSelector(state => state.global);
   const rooms = useAppSelector(roomsSelector);
-
   const room: Room | undefined = rooms.find(r => r.title === task.room)
 
   const dispatch = useAppDispatch();
 
-  const [point, setPoint] = React.useState<Point | null>(null)
+  const [point, setPoint] = React.useState<Point | null>(null);
+
+  const diffDays = diffInDays(task.date, new Date());
+  const isExpired = diffDays >= 1;
 
   const roomPickerOpenHandler = (e: React.MouseEvent) => {
     const point_: Point = {
@@ -58,18 +44,25 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
   }
 
   return (
-      <Modal onClose={onClose}>
-        <div className={styles.container}>
-          <header className={styles.head}>
-            <button className={styles.back} onClick={onClose}><FiChevronLeft/> Назад</button>
-            <span className={styles.title}>Детали задачи</span>
-            <FiMoreVertical className={styles.menu}/>
-          </header>
+    <Modal onClose={onClose}>
+      <div className={styles.container}>
+        <header className={styles.head}>
+          <button className={styles.back} onClick={onClose}><FiChevronLeft/> Назад</button>
+          <span className={styles.title}>Детали задачи</span>
+          <FiMoreVertical className={styles.menu}/>
+        </header>
 
-          <Input text={task.title}/>
-          <Textarea text={task.description}/>
+        <div className={styles.paramsContainer}>
+          <div className={styles.combineContainer}>
+            <div className={styles.row}>
+              <Input text={task.title}/>
+            </div>
+            <div className={styles.row}>
+              <Textarea text={task.description}/>
+            </div>
+          </div>
 
-          <div className={styles.params}>
+          <div className={styles.combineContainer}>
             <div className={styles.row}
                  onClick={roomPickerOpenHandler}>
               <p>Комната</p>
@@ -84,32 +77,40 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
               <RepeatChooser onChange={rule => console.log('Новое правило:', rule)}/>
             </div>
 
-            <Row label="Срок">
-              <button className={styles.dueBtn}>пн, 5 мая</button>
-              <span className={styles.overdue}>Просрочена 1 д</span>
-            </Row>
+            <div className={styles.row}>
+              <div className={styles.block}>
+                <p>Срок</p>
+                {isExpired &&
+                    <p className={styles.overdue}>Просрочена {diffDays} д</p>
+                }
+              </div>
+              <button className={styles.dueToButton}>пн, 5 мая</button>
+            </div>
 
-            <Row label="Напоминание">
+            <div className={styles.row}>
+              <p>Напоминание</p>
               <input type="checkbox"/>
-            </Row>
-            
+            </div>
+          </div>
+
+          <div className={styles.combineContainer}>
             <div className={styles.row}>
               <p>Назначить задачу</p>
             </div>
-
           </div>
-
-
-          <footer className={styles.footer}>
-            <button className={styles.ok}>✓ Выполнить</button>
-            <button className={styles.skip}>→ Пропустить</button>
-          </footer>
-
-          {point && <RoomPicker position={point}
-                                task={task}
-                                onClose={closeRoomPicker}/>}
         </div>
-      </Modal>
+
+
+        <footer className={styles.footer}>
+          <button className={styles.ok}>✓ Выполнить</button>
+          <button className={styles.skip}>→ Пропустить</button>
+        </footer>
+
+        {point && <RoomPicker position={point}
+                              task={task}
+                              onClose={closeRoomPicker}/>}
+      </div>
+    </Modal>
   );
 }
 
