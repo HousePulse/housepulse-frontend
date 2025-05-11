@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import * as styles from './TaskList.module.css'
 import {useAppDispatch, useAppSelector} from "@store/store";
 import {Task} from "@types_app/task";
-import TaskModal from '@components/Task/TaskModal/TaskModal';
+import TaskModal from '@components/ModalComponents/TaskModal/TaskModal';
 import sleepImage from '@assets/img/sleep.png';
 import {BiSortAlt2} from "react-icons/bi";
 import {diffInDays} from "@utils/date";

@@ -3,7 +3,7 @@ import * as styles from './Schedule.module.css'
 import {useAppDispatch, useAppSelector} from "@store/store";
 
 import {addDays, diffInDays, fmtRelativeRu, isSameDay, rangeDays, startOfWeek,} from '@utils/date';
-import CalendarModal from "@components/Schedule/CalendarModal/CalendarModal";
+import CalendarModal from "@components/ModalComponents/CalendarModal/CalendarModal";
 import TaskList from "@components/Task/TaskList/TaskList";
 import {IoIosArrowDown,} from "react-icons/io";
 import {tasksSelector} from "@store/selectors/selectors";

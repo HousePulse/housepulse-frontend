@@ -6,13 +6,12 @@ import {FiChevronLeft, FiMoreVertical} from "react-icons/fi";
 import Modal, {ModalSize} from "@components/UI/Modal/Modal";
 import Textarea from "@components/UI/Textarea/Textarea";
 import Input from "@components/UI/Input/Input";
-import {Point} from "@types_app/general";
-import RoomPicker from "@components/Room/RoomPicker/RoomPicker";
+import RoomPickerModal from "@components/ModalComponents/RoomPickerModal/RoomPickerModal";
 import {roomsSelector} from "@store/selectors/selectors";
 import {getIconByRoom, RoomIconSize} from "@components/Room/RoomIcon/RoomIcon";
 import {RepeatChooser} from "@components/Task/RepeatChooser/RepeatChooser";
-import {diffInDays, fmtDate, fmtRelativeRu} from "@utils/date";
-import CalendarModal from "@components/Schedule/CalendarModal/CalendarModal";
+import {diffInDays, fmtRelativeRu} from "@utils/date";
+import CalendarModal from "@components/ModalComponents/CalendarModal/CalendarModal";
 import {useContextPoint} from "@utils/hooks";
 
 type Props = {
@@ -37,7 +36,6 @@ export const Combine: React.FC<React.PropsWithChildren> = ({children}) => (
 const ChevronLeft = React.memo(FiChevronLeft);
 
 const TaskModal: React.FC<Props> = ({task, onClose}) => {
-  const global = useAppSelector(state => state.global);
   const rooms = useAppSelector(roomsSelector);
 
   const room = React.useMemo(
@@ -47,7 +45,7 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
 
   const dispatch = useAppDispatch();
 
-  const [taskDeadline, setTaskDeadline] = React.useState<Date>(new Date());
+  const [taskDeadline, setTaskDeadline] = React.useState<Date>(task.date);
   const [roomPoint, openRoom, closeRoom] = useContextPoint();
   const [calendarPoint, openCalendar, closeCalendar] = useContextPoint();
 
@@ -55,8 +53,6 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
     () => diffInDays(task.date, new Date()),
     [task.date]
   );
-
-  const isExpired = diffDays >= 1;
 
   return (
     <Modal onClose={onClose}>
@@ -94,7 +90,7 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
             <Row>
               <div className={styles.block}>
                 <p>Срок</p>
-                {isExpired &&
+                {diffDays >= 1 &&
                     <p className={styles.overdue}>Просрочена {diffDays} д</p>
                 }
               </div>
@@ -121,9 +117,9 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
           <button className={styles.skip}>→ Пропустить</button>
         </footer>
 
-        {roomPoint && <RoomPicker position={roomPoint}
-                                  task={task}
-                                  onClose={closeRoom}/>}
+        {roomPoint && <RoomPickerModal position={roomPoint}
+                                       task={task}
+                                       onClose={closeRoom}/>}
         {calendarPoint && <CalendarModal position={calendarPoint}
                                          monthDate={taskDeadline}
                                          size={ModalSize.fit}

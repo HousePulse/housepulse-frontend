@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from "@store/store";
 import * as styles from "./Sidebar.module.css";
 import * as buttonStyles from "@components/UI/Button/Button.module.css";
 import RoomList from "@components/Room/RoomList/RoomList";
-import SettingsModal from "@components/Settings/SettingsModal/SettingsModal";
+import SettingsModal from "@components/ModalComponents/SettingsModal/SettingsModal";
 import {IoIosArrowDown, IoIosSettings} from "react-icons/io";
 import {PageRouter, pageRoutersName, pageRoutes} from "@root/App/App";
 import {tasksSelector} from "@store/selectors/selectors";

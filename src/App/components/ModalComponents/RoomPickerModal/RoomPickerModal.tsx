@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import * as styles from './RoomPicker.module.css';
+import * as styles from './RoomPickerModal.module.css';
 
 import {useAppDispatch, useAppSelector} from "@store/store";
 import Modal, {ModalSize} from "@components/UI/Modal/Modal";
@@ -15,7 +15,7 @@ type Props = {
   task: Task;
 }
 
-const RoomPicker: FC<Props> = ({position, onClose, task}) => {
+const RoomPickerModal: FC<Props> = ({position, onClose, task}) => {
   const dispatch = useAppDispatch();
 
   return (
@@ -44,4 +44,4 @@ const RoomPicker: FC<Props> = ({position, onClose, task}) => {
   );
 }
 
-export default RoomPicker;
+export default RoomPickerModal;
