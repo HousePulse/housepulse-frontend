@@ -2,12 +2,13 @@ import React, {FC} from 'react';
 import * as style from './Textarea.module.css'
 
 type PropsType = {
-  text: string
+  value: string,
+  onChange: (text: string) => void,
 }
 
-const Textarea: FC<PropsType> = ({text}) => {
+const Textarea: FC<PropsType> = ({value, onChange}) => {
   const textareaRef = React.useRef<HTMLTextAreaElement | null>(null);
-  const [value, setValue] = React.useState(text);
+  const [value_, setValue_] = React.useState(value);
 
   React.useLayoutEffect(() => {
     if (!textareaRef.current) {
@@ -16,13 +17,16 @@ const Textarea: FC<PropsType> = ({text}) => {
 
     textareaRef.current.style.height = "inherit";
     textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-  }, [value]);
+  }, [value_]);
 
   return (
-      <textarea className={style.textarea}
-                rows={1} ref={textareaRef}
-                defaultValue={text}
-                onChange={(e) => setValue(e.target.value)}/>
+    <textarea className={style.textarea}
+              rows={1} ref={textareaRef}
+              defaultValue={value}
+              onChange={(e) => {
+                setValue_(e.target.value);
+                onChange(e.target.value);
+              }}/>
   );
 }
 

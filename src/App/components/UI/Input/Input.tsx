@@ -3,16 +3,20 @@ import {useAppDispatch, useAppSelector} from "@store/store";
 import * as styles from "./Input.module.css";
 
 type Props = {
-  text: string,
+  value: string,
+  onChange: (text: string) => void,
 }
 
-const Input: FC<Props> = ({text}) => {
+const Input: FC<Props> = ({value, onChange}) => {
   const global = useAppSelector(state => state.global);
   const dispatch = useAppDispatch();
 
   return (
-      <input className={styles.input}
-             defaultValue={text}/>
+    <input className={styles.input}
+           defaultValue={value}
+           onChange={(e) => {
+             onChange(e.target.value)
+           }}/>
   );
 }
 

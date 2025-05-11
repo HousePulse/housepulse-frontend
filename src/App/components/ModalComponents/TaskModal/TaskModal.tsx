@@ -19,25 +19,11 @@ type Props = {
   onClose: () => void
 };
 
-
-type PropsRow = React.PropsWithChildren<{
-  onClick?: (...args: any[]) => any;
-}>;
-export const Row: React.FC<PropsRow> = ({children, onClick}) => (
-  <div className={styles.row} onClick={onClick}>
-    {children}
-  </div>
-);
-
-export const Combine: React.FC<React.PropsWithChildren> = ({children}) => (
-  <section className={styles.combineContainer}>{children}</section>
-);
-
 const ChevronLeft = React.memo(FiChevronLeft);
 
+// TODO: сделать draftTask и избавиться от taskDeadline (заменить draftTask)
 const TaskModal: React.FC<Props> = ({task, onClose}) => {
   const rooms = useAppSelector(roomsSelector);
-
   const room = React.useMemo(
     () => rooms.find(r => r.title === task.room),
     [rooms, task.room]
@@ -64,30 +50,34 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
         </header>
 
         <div className={styles.paramsContainer}>
-          <Combine>
-            <Row>
-              <Input text={task.title}/>
-            </Row>
-            <Row>
-              <Textarea text={task.description}/>
-            </Row>
-          </Combine>
+          <section className={styles.combineContainer}>
+            <div className={styles.row}>
+              <Input value={task.title}
+                     onChange={(text: string) => {
+                     }}/>
+            </div>
+            <div className={styles.row}>
+              <Textarea value={task.description}
+                        onChange={(text: string) => {
+                        }}/>
+            </div>
+          </section>
 
-          <Combine>
-            <Row>
+          <section className={styles.combineContainer}>
+            <div className={styles.row}>
               <p>Комната</p>
               <button className={styles.roomButton} onClick={openRoom}>
                 {getIconByRoom(room, RoomIconSize.small)}
                 <p className={styles.value}>{task.room}</p>
               </button>
-            </Row>
+            </div>
 
-            <Row>
+            <div className={styles.row}>
               <p>Повтор</p>
               <RepeatChooser onChange={rule => console.log('Новое правило:', rule)}/>
-            </Row>
+            </div>
 
-            <Row>
+            <div className={styles.row}>
               <div className={styles.block}>
                 <p>Срок</p>
                 {diffDays >= 1 &&
@@ -97,19 +87,19 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
               <button className={styles.deadlineButton}
                       onClick={openCalendar}>{fmtRelativeRu(taskDeadline)}
               </button>
-            </Row>
+            </div>
 
-            <Row>
+            <div className={styles.row}>
               <p>Напоминание</p>
               <input type="checkbox"/>
-            </Row>
-          </Combine>
+            </div>
+          </section>
 
-          <Combine>
-            <Row>
+          <section className={styles.combineContainer}>
+            <div className={styles.row}>
               <p>Назначить задачу</p>
-            </Row>
-          </Combine>
+            </div>
+          </section>
         </div>
 
         <footer className={styles.footer}>
