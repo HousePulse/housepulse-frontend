@@ -16,7 +16,6 @@ type Props = {
 }
 
 const RoomPicker: FC<Props> = ({position, onClose, task}) => {
-  const global = useAppSelector(state => state.global);
   const dispatch = useAppDispatch();
 
   return (

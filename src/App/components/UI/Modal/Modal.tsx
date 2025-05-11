@@ -43,7 +43,7 @@ const Modal: FC<Props> = memo(({children, size = ModalSize.medium, onClose, posi
     style = {
       position: 'fixed',
       ...pos_,
-      transform: 'translate(-5%, -5%)'
+      // transform: 'translate(-5%, -5%)'
     };
   }
 

@@ -14,6 +14,7 @@ type Props = {
   size?: ModalSize
 };
 
+// TODO: запретить выбор старых дат и месяцев
 const CalendarModal: React.FC<Props> = ({monthDate, tasks, onSelect, onClose, position, size}) => {
   const [cursor, setCursor] = useState(monthDate);
 
