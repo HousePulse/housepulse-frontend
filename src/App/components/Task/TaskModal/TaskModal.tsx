@@ -3,44 +3,73 @@ import * as styles from './TaskModal.module.css'
 import {useAppDispatch, useAppSelector} from "@store/store";
 import {Task} from "@types_app/task";
 import {FiChevronLeft, FiMoreVertical} from "react-icons/fi";
-import Modal from "@components/UI/Modal/Modal";
+import Modal, {ModalSize} from "@components/UI/Modal/Modal";
 import Textarea from "@components/UI/Textarea/Textarea";
 import Input from "@components/UI/Input/Input";
 import {Point} from "@types_app/general";
 import RoomPicker from "@components/Room/RoomPicker/RoomPicker";
 import {roomsSelector} from "@store/selectors/selectors";
-import {Room} from "@types_app/room";
 import {getIconByRoom, RoomIconSize} from "@components/Room/RoomIcon/RoomIcon";
 import {RepeatChooser} from "@components/Task/RepeatChooser/RepeatChooser";
-import {diffInDays} from "@utils/date";
+import {diffInDays, fmtDate, fmtRelativeRu} from "@utils/date";
+import CalendarModal from "@components/Schedule/CalendarModal/CalendarModal";
 
 type Props = {
   task: Task;
   onClose: () => void
 };
 
+
+type PropsRow = React.PropsWithChildren<{
+  onClick?: (...args: any[]) => any;
+}>;
+export const Row: React.FC<PropsRow> = ({children, onClick}) => (
+  <div className={styles.row} onClick={onClick}>
+    {children}
+  </div>
+);
+
+export const Combine: React.FC<React.PropsWithChildren> = ({children}) => (
+  <section className={styles.combineContainer}>{children}</section>
+);
+
 const TaskModal: React.FC<Props> = ({task, onClose}) => {
+  const global = useAppSelector(state => state.global);
   const rooms = useAppSelector(roomsSelector);
-  const room: Room | undefined = rooms.find(r => r.title === task.room)
+
+  const room = React.useMemo(
+    () => rooms.find(r => r.title === task.room),
+    [rooms, task.room]
+  );
 
   const dispatch = useAppDispatch();
 
-  const [point, setPoint] = React.useState<Point | null>(null);
+  const [taskDeadline, setTaskDeadline] = React.useState<Date>(new Date());
+  const [roomPoint, setRoomPoint] = React.useState<Point | null>(null);
+  const [calendarPoint, setCalendarPoint] = React.useState<Point | null>(null);
 
-  const diffDays = diffInDays(task.date, new Date());
+  const diffDays = React.useMemo(
+    () => diffInDays(task.date, new Date()),
+    [task.date]
+  );
+
   const isExpired = diffDays >= 1;
 
-  const roomPickerOpenHandler = (e: React.MouseEvent) => {
-    const point_: Point = {
-      x: e.clientX,
-      y: e.clientY
-    }
-
-    setPoint(point_);
-  }
+  const roomPickerOpenHandler = React.useCallback(
+    (e: React.MouseEvent) => setRoomPoint({x: e.clientX, y: e.clientY}),
+    []
+  );
+  const openCalendarModalHandler = React.useCallback(
+    (e: React.MouseEvent) => setCalendarPoint({x: e.clientX, y: e.clientY}),
+    []
+  )
 
   const closeRoomPicker = () => {
-    setPoint(null);
+    setRoomPoint(null);
+  }
+
+  const closeCalendarModal = () => {
+    setCalendarPoint(null);
   }
 
   return (
@@ -53,62 +82,70 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
         </header>
 
         <div className={styles.paramsContainer}>
-          <div className={styles.combineContainer}>
-            <div className={styles.row}>
+          <Combine>
+            <Row>
               <Input text={task.title}/>
-            </div>
-            <div className={styles.row}>
+            </Row>
+            <Row>
               <Textarea text={task.description}/>
-            </div>
-          </div>
+            </Row>
+          </Combine>
 
-          <div className={styles.combineContainer}>
-            <div className={styles.row}
-                 onClick={roomPickerOpenHandler}>
+          <Combine>
+            <Row onClick={roomPickerOpenHandler}>
               <p>Комната</p>
               <span className={styles.inline}>
-              {getIconByRoom(room, RoomIconSize.small)}
+                {getIconByRoom(room, RoomIconSize.small)}
                 <p className={styles.value}>{task.room}</p>
-            </span>
-            </div>
+              </span>
+            </Row>
 
-            <div className={styles.row}>
+            <Row>
               <p>Повтор</p>
               <RepeatChooser onChange={rule => console.log('Новое правило:', rule)}/>
-            </div>
+            </Row>
 
-            <div className={styles.row}>
+            <Row>
               <div className={styles.block}>
                 <p>Срок</p>
                 {isExpired &&
                     <p className={styles.overdue}>Просрочена {diffDays} д</p>
                 }
               </div>
-              <button className={styles.dueToButton}>пн, 5 мая</button>
-            </div>
+              <button className={styles.dueToButton}
+                      onClick={openCalendarModalHandler}>{fmtRelativeRu(taskDeadline)}
+              </button>
+            </Row>
 
-            <div className={styles.row}>
+            <Row>
               <p>Напоминание</p>
               <input type="checkbox"/>
-            </div>
-          </div>
+            </Row>
+          </Combine>
 
-          <div className={styles.combineContainer}>
-            <div className={styles.row}>
+          <Combine>
+            <Row>
               <p>Назначить задачу</p>
-            </div>
-          </div>
+            </Row>
+          </Combine>
         </div>
-
 
         <footer className={styles.footer}>
           <button className={styles.ok}>✓ Выполнить</button>
           <button className={styles.skip}>→ Пропустить</button>
         </footer>
 
-        {point && <RoomPicker position={point}
-                              task={task}
-                              onClose={closeRoomPicker}/>}
+        {roomPoint && <RoomPicker position={roomPoint}
+                                  task={task}
+                                  onClose={closeRoomPicker}/>}
+        {calendarPoint && <CalendarModal position={calendarPoint}
+                                         monthDate={taskDeadline}
+                                         size={ModalSize.fit}
+                                         onSelect={(d: Date) => {
+                                           setTaskDeadline(d);
+                                           closeCalendarModal();
+                                         }}
+                                         onClose={closeCalendarModal}/>}
       </div>
     </Modal>
   );

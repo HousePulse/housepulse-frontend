@@ -1,18 +1,20 @@
 import React, {useCallback, useState} from 'react';
-import {useAppDispatch, useAppSelector} from "@store/store";
 import {Task} from "@types_app/task";
 import {addMonths, isSameDay, isSameMonth, monthInterval, rangeDays, WEEKDAY_LABELS} from "@utils/date";
 import * as styles from './CalendarModal.module.css';
 import Modal, {ModalSize} from "@components/UI/Modal/Modal";
+import {Point} from "@types_app/general";
 
 type Props = {
   monthDate: Date;
-  tasks: Task[];
+  tasks?: Task[];
   onSelect: (d: Date) => void;
-  onClose: () => void;
+  onClose: (...args: any[]) => void;
+  position?: Point,
+  size?: ModalSize
 };
 
-const CalendarModal: React.FC<Props> = ({monthDate, tasks, onSelect, onClose}) => {
+const CalendarModal: React.FC<Props> = ({monthDate, tasks, onSelect, onClose, position, size}) => {
   const [cursor, setCursor] = useState(monthDate);
 
   const prevMonth = useCallback(() => setCursor(addMonths(cursor, -1)), [cursor]);
@@ -22,34 +24,35 @@ const CalendarModal: React.FC<Props> = ({monthDate, tasks, onSelect, onClose}) =
   const days = rangeDays(start, end);
 
   return (
-      <Modal onClose={onClose}
-             size={ModalSize.big}>
-        <header className={styles.head}>
-          <button className={styles.arrow} onClick={prevMonth}>‹</button>
-          <span className={styles.monthLabel}>
+    <Modal onClose={onClose}
+           size={size || ModalSize.big}
+           position={position}>
+      <header className={styles.head}>
+        <button className={styles.arrow} onClick={prevMonth}>‹</button>
+        <span className={styles.monthLabel}>
           {cursor.toLocaleDateString('ru-RU', {month: 'long', year: 'numeric'})}
         </span>
-          <button className={styles.arrow} onClick={nextMonth}>›</button>
-        </header>
+        <button className={styles.arrow} onClick={nextMonth}>›</button>
+      </header>
 
-        <div className={styles.grid}>
-          {WEEKDAY_LABELS.map(l => <span key={l} className={styles.wLabel}>{l}</span>)}
+      <div className={styles.grid}>
+        {WEEKDAY_LABELS.map(l => <span key={l} className={styles.wLabel}>{l}</span>)}
 
-          {days.map(d => {
-            const count = tasks.filter(t => isSameDay(t.date, d)).length;
-            return (
-                <button
-                    key={d.toISOString()}
-                    className={`${styles.cell} ${isSameMonth(d, cursor) ? '' : styles.outMonth}`}
-                    onClick={() => onSelect(d)}
-                >
-                  {d.getDate()}
-                  {!!count && <span className={styles.tag}>{count}</span>}
-                </button>
-            );
-          })}
-        </div>
-      </Modal>
+        {days.map(d => {
+          const count = tasks ? tasks.filter(t => isSameDay(t.date, d)).length : null;
+          return (
+            <button
+              key={d.toISOString()}
+              className={`${styles.cell} ${isSameMonth(d, cursor) ? '' : styles.outMonth}`}
+              onClick={() => onSelect(d)}
+            >
+              {d.getDate()}
+              {!!count && <span className={styles.tag}>{count}</span>}
+            </button>
+          );
+        })}
+      </div>
+    </Modal>
   );
 }
 
