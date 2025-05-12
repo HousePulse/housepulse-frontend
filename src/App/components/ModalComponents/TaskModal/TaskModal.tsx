@@ -14,6 +14,7 @@ import {diffInDays, fmtRelativeRu} from "@utils/date";
 import CalendarModal from "@components/ModalComponents/CalendarModal/CalendarModal";
 import {useContextPoint} from "@utils/hooks";
 import Checkbox from "@components/UI/Checkbox/Checkbox";
+import TimePicker from "@components/UI/TimePicker/TimePicker";
 
 type Props = {
   task: Task;
@@ -32,6 +33,9 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
 
   const dispatch = useAppDispatch();
 
+  const [hours, setHours] = React.useState<number>(12);
+  const [minutes, setMinutes] = React.useState<number>(30);
+  const [isTimePickerOpen, setIsTimePickerOpen] = React.useState(false);
   const [taskDeadline, setTaskDeadline] = React.useState<Date>(task.date);
   const [roomPoint, openRoom, closeRoom] = useContextPoint();
   const [calendarPoint, openCalendar, closeCalendar] = useContextPoint();
@@ -89,11 +93,22 @@ const TaskModal: React.FC<Props> = ({task, onClose}) => {
                       onClick={openCalendar}>{fmtRelativeRu(taskDeadline)}
               </button>
             </div>
+          </section>
 
+
+          <section className={styles.combineContainer}>
             <div className={styles.row}>
               <p>Напоминание</p>
-              <Checkbox onChange={() => {}}/>
+              <Checkbox onChange={() => {
+                setIsTimePickerOpen(!isTimePickerOpen);
+              }}/>
             </div>
+            {isTimePickerOpen && <div className={[styles.row, styles.timePicker].join(' ')}>
+                <TimePicker hour={hours} minute={minutes} onChange={(h, m) => {
+                  setHours(h);
+                  setMinutes(m);
+                }}/>
+            </div>}
           </section>
 
           <section className={styles.combineContainer}>

@@ -3,7 +3,8 @@
 }
 
 .wheel {
-  overflow-y: auto;
+  overflow-y: hidden;
+  overscroll-behavior: none;
   scroll-behavior: smooth;
   position: relative;
   -webkit-overflow-scrolling: touch;

@@ -1,0 +1,33 @@
+.timePicker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    background-color: var(--color-muted);
+    opacity: 0.2;
+    border-radius: 0.5rem;
+    height: 2rem;
+  }
+}
+
+.wheel {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.25rem;
+
+  &:first-child {
+    align-items: end;
+  }
+
+  &:last-child {
+    align-items: start;
+  }
+}

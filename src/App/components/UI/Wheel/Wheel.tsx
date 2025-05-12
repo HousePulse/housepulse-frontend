@@ -8,6 +8,7 @@ interface WheelProps<T> {
   windowSize?: number;
   renderItem?: (item: T) => React.ReactNode;
   hideScrollBar?: boolean;
+  className?: string;
 }
 
 export function Wheel<T extends React.ReactNode>(
@@ -17,7 +18,8 @@ export function Wheel<T extends React.ReactNode>(
     onSelect,
     windowSize = 5,
     renderItem = (i: T) => <>{i}</>,
-    hideScrollBar = true
+    hideScrollBar = true,
+    className = ''
   }: WheelProps<T>
 ) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -37,6 +39,7 @@ export function Wheel<T extends React.ReactNode>(
 
   const onWheel = (e: React.WheelEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     const idx = items.indexOf(selected);
     if (e.deltaY > 0 && idx < items.length - 1) onSelect(items[idx + 1]);
     if (e.deltaY < 0 && idx > 0) onSelect(items[idx - 1]);
@@ -46,7 +49,7 @@ export function Wheel<T extends React.ReactNode>(
 
   return (
     <div
-      className={[styles.wheel, hideScrollBar ? styles.hideScrollBar : ''].join(' ')}
+      className={[styles.wheel, hideScrollBar ? styles.hideScrollBar : '', className].join(' ')}
       style={{height: `calc(${windowSize} * var(--wheel-item-height))`}}
       onWheel={onWheel}
       ref={containerRef}
